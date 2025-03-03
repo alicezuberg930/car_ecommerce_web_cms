@@ -13,7 +13,7 @@ export const readSiteConfigsHook = () => {
 
 export const updateSiteConfigsHook = () => {
     return useMutation({
-        mutationFn: (config: Config) => updateSiteConfigs(config),
+        mutationFn: (config: any) => updateSiteConfigs(config),
         onSuccess(data) {
             toast.success(data.message)
         },

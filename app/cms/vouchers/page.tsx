@@ -101,7 +101,7 @@ const VouchersPage: React.FC = () => {
                                                     </div>
                                                 </td>
                                             </tr> :
-                                            vouchers && (vouchers.data as Voucher[]).map((v) => {
+                                            vouchers && (vouchers.data as any[]).map((v) => {
                                                 return (
                                                     <tr key={v._id} className="bg-white">
                                                         <td className="px-3 py-2 md:py-4 text-gray-900 text-sm leading-5 whitespace-normal">

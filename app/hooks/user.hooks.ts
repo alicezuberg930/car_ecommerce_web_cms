@@ -21,14 +21,14 @@ export const handleUserHook = (page: number) => {
         onError(error) { if (isAxiosError(error)) toast.error(error.response?.data.error) },
         onSuccess(data) {
             toast.success(data.message)
-            queryClient.invalidateQueries({ queryKey: [API.READ_USERS, page] })
+            queryClient.invalidateQueries({ queryKey: ["API.READ_USERS", page] })
         },
     })
 }
 
 export const readUserHook = (page: number, limit = 10, search = "sale") => {
     return useQuery({
-        queryKey: [API.READ_USERS, page],
+        queryKey: ["API.READ_USERS", page],
         queryFn: () => getUsers({ page, limit, search }),
         placeholderData: (previousData, previousQuery) => previousData,
     })

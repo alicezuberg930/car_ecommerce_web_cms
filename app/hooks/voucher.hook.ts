@@ -7,7 +7,7 @@ import { PATH } from "../common/path"
 
 export const readVouchersHook = (page: number) => {
     return useQuery({
-        queryKey: [API.READ_VOUCHERS],
+        queryKey: ["API.READ_VOUCHERS"],
         queryFn: () => getVouchers(),
         placeholderData: (previousData, _) => previousData,
     })
@@ -18,10 +18,10 @@ export const createVoucherHook = () => {
     const router = useRouter()
 
     return useMutation({
-        mutationFn: (voucher: Voucher) => createVoucher(voucher),
+        mutationFn: (voucher: any) => createVoucher(voucher),
         onSuccess(_) {
             toast.success("Thêm mã khuyến mãi thành công")
-            queryClient.invalidateQueries({ queryKey: [API.READ_VOUCHERS] })
+            queryClient.invalidateQueries({ queryKey: ["API.READ_VOUCHERS"] })
             router.push(PATH.VOUCHERS)
         },
         onError(_) {
@@ -37,7 +37,7 @@ export const approveVoucherHook = () => {
         mutationFn: (id: string) => approveVoucher(id),
         onSuccess(_) {
             toast.success("Chấp thuận mã khuyến mãi thành công")
-            queryClient.invalidateQueries({ queryKey: [API.READ_VOUCHERS] })
+            queryClient.invalidateQueries({ queryKey: ["API.READ_VOUCHERS"] })
         },
         onError(_) {
             toast.error("Đã có lỗi xảy ra")

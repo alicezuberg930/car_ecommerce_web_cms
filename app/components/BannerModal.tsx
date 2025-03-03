@@ -1,6 +1,4 @@
 import React, { Dispatch, FormEvent, SetStateAction, useEffect, useState } from "react"
-import { readCategoryHook } from "../hooks/category.hooks"
-import { createBrandHook, updateBrandHook } from "../hooks/brands.hooks"
 import { uploadFilesHook } from "../hooks/common.hooks"
 import { toast } from "react-toastify"
 import CustomImagePicker from "./CustomImagePicker"
@@ -42,7 +40,7 @@ const BannerModal: React.FC<{ selectedBanner?: Banner, setSelected?: Dispatch<Se
             for (let i = 0; i < images.length; i++) {
                 formData.set('file', images[0].file!)
                 await new Promise(resolve => {
-                    uploadHook.mutate(formData, {
+                    uploadHook.mutate({ file: formData }, {
                         onSuccess(data) {
                             tempImages = data.url
                             resolve(null)

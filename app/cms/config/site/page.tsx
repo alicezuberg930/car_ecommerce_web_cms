@@ -15,7 +15,7 @@ const ConfigurationPage: React.FC = () => {
     const updateSiteConfigs = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget);
-        const config: Config = Object.fromEntries(formData.entries())
+        const config: any = Object.fromEntries(formData.entries())
         config["footerContact"] = getContacts()
         mutate.mutate(config)
     }
@@ -116,7 +116,7 @@ const ConfigurationPage: React.FC = () => {
                                     <td className='font-bold text-sm py-3'>Footer: thông tin liên hệ</td>
                                 </tr>
                                 {
-                                    configs?.data?.footerContact && configs?.data?.footerContact.map((contact, i) => {
+                                    configs?.data?.footerContact && configs?.data?.footerContact.map((contact: any, i: any) => {
                                         return (
                                             <ContactConfiguration key={i} i={i + 1} contact={contact} />
                                         )
