@@ -18,7 +18,7 @@ const LoginPage: React.FC = () => {
       toast.error(response.error)
     } else {
       toast.success("Đăng nhập thành công")
-      router.push(PATH.CATEGORIES)
+      router.push(PATH.DASHBOARD)
     }
   }
 

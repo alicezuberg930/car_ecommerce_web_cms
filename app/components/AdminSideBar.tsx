@@ -89,7 +89,6 @@ const AdminSideBar: React.FC = () => {
                                                 <Link key={j} className={`${currentPath === child.path ? 'bg-blue-600' : ''} p-2 mt-3 flex items-center rounded-md cursor-pointer hover:bg-blue-600 text-white`} href={child.path!}>
                                                     {child.icon}
                                                     <span className='flex-1 text-sm ml-4 text-gray-200'>{child.name}</span>
-                                                    {child.path === PATH.ORDERS_ALL && <div className='px-2 bg-red-500 rounded-lg text-sm h-full'>15</div>}
                                                 </Link>
                                             )
                                         })

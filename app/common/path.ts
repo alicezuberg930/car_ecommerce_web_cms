@@ -2,7 +2,6 @@ export const PATH = {
     NEW_USER: "/cms/users/new",
     CARTYPES: "/cms/cartypes",
     NEW_CARTYPE: "/cms/cartypes/new",
-    ORDERS_ALL: "/cms/orders/list",
     USERS: "/cms/users",
     PRODUCTS: "/cms/products/list",
     NEW_PRODUCT: "/cms/products/new",
@@ -17,7 +16,6 @@ export const PATH = {
     BRANDS: "/cms/brands",
     NEW_BRAND: "/cms/brands/new",
     NEW_BANNER: "/cms/banners/new",
-    SHIPPING: "/cms/shipping",
     NEW_SHIPPING_ADDRESS: "/cms/shipping/new",
     VOUCHERS: "/cms/vouchers",
     NEW_VOUCHERS: "/cms/vouchers/new"

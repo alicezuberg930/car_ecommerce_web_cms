@@ -50,35 +50,6 @@ const menuItems = [
     {
         isAuthorized: (check: boolean) => check || !check,
         isParent: true,
-        name: "Đơn hàng",
-        icon: <PiShippingContainer className="w-5 h-5" />,
-        toggleType: "isOrder",
-        children: [
-            {
-                name: "Tất cả đơn hàng",
-                path: PATH.ORDERS_ALL,
-                icon: <PiShippingContainer size={20} />,
-            },
-            // {
-            //     name: "Đơn hàng đang xử lý",
-            //     path: PATH.ORDERS_ALL,
-            //     icon: <PiShippingContainer size={20} />
-            // },
-            // {
-            //     name: "Đơn hàng thành công",
-            //     path: PATH.ORDERS_ALL,
-            //     icon: <PiShippingContainer size={20} />
-            // },
-            // {
-            //     name: "Tất cả đơn hàng",
-            //     path: PATH.ORDERS_ALL,
-            //     icon: <PiShippingContainer size={20} />
-            // },
-        ]
-    },
-    {
-        isAuthorized: (check: boolean) => check || !check,
-        isParent: true,
         name: "Sản phẩm",
         icon: <FaBoxOpen size={20} />,
         toggleType: "isProduct",
