@@ -74,3 +74,60 @@ export const deleteCarType = async ({ id }: { id: string }) => {
     const response = await axioInstance<any>({ url: API.DELETE_CARTYPE(id), method: "DELETE", })
     return response.data
 }
+
+// to be deleted
+// admin 
+export const lockAccount = async (lockReason: string) => {
+    return await axioInstance<any>({ url: "API.LOCK", method: "POST", data: { lockReason } }).then(res => res.data)
+}
+
+export const unlockAccount = async (lockReason: string) => {
+    return await axioInstance<any>({ url: "API.UNLOCK", method: "POST", data: { lockReason } }).then(res => res.data)
+}
+
+export const getUsers = async (filter?: any) => {
+    return await axioInstance<any>({ url: "API.READ_USERS", method: "GET", params: filter }).then(res => res.data)
+}
+
+export const createUser = async (user: User) => {
+    return await axioInstance<any>({ url: "API.CREATE_USER", method: "POST", data: user }).then(res => res.data)
+}
+
+// Cấu hình trang
+export const getSiteConfigs = async () => {
+    return await axioInstance<any>({ url: "API.CONFIGS", method: "GET" }).then(res => res.data)
+}
+
+export const updateSiteConfigs = async (config: any) => {
+    return await axioInstance<any>({ url: "API.CONFIGS", method: "POST", data: config }).then(res => res.data)
+}
+
+// Banner
+export const createBanner = async (banner: any) => {
+    return await axioInstance<any>({ url: "API.CREATE_BANNER", method: "POST", data: banner }).then(res => res.data)
+}
+
+export const updateBanner = async (id: string, banner: any) => {
+    return await axioInstance<any>({ url: `${"API.UPDATE_BANNER"}/${id}`, method: "PUT", params: { id }, data: banner }).then(res => res.data)
+}
+
+export const deleteBanner = async (id: string) => {
+    return await axioInstance<any>({ url: `${"API.DELETE_BANNER"}/${id}`, method: "DELETE", params: { id } }).then(res => res.data)
+}
+
+export const getBanners = async () => {
+    return await axioInstance<any>({ url: "API.READ_BANNERS", method: "GET" }).then(res => res.data)
+}
+
+// Voucher
+export const getVouchers = async () => {
+    return await axioInstance<any>({ url: "API.READ_VOUCHERS", method: "GET" }).then(res => res.data)
+}
+
+export const createVoucher = async (voucher: any) => {
+    return await axioInstance<any>({ url: "API.CREATE_VOUCHER", method: "POST", data: voucher }).then(res => res.data)
+}
+
+export const approveVoucher = async (id: string) => {
+    return await axioInstance<any>({ url: "API.APPROVE_VOUCHER(id)", method: "POST" }).then(res => res.data)
+}
