@@ -1,2 +1,0 @@
-interface District extends Province {
-}

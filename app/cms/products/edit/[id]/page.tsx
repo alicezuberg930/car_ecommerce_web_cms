@@ -1,12 +1,12 @@
 import ProductModal from "@/app/components/ProductModal"
-import { detailsProduct } from "@/app/services/api.service"
+import { getProductDetails } from "@/app/services/api.service"
 
 const EditProductPage: React.FC<{ params: Promise<{ id: string }> }> = async ({ params }) => {
     const id = (await params).id
-    const response = await detailsProduct(id)
-    const product: Product = response.product
+    const response = await getProductDetails({ id })
+    const product: Product = response.data
 
-    return (<ProductModal page={1} product={product} />)
+    return <ProductModal page={1} selectedProduct={product} />
 }
 
 export default EditProductPage

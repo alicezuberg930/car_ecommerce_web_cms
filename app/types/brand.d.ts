@@ -1,6 +1,8 @@
 interface Brand {
     _id?: string,
     name?: string,
+    country?: string,
     logo?: string,
-    categories?: string[],
+    createdAt?: string,
+    updatedAt?: string,
 }

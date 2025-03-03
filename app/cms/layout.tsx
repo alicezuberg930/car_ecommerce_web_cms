@@ -8,7 +8,7 @@ import LoadingOverlay from "../components/LoadingOverlay"
 
 
 export const metadata: Metadata = {
-    title: "Future Life | CMS",
+    title: "63 Car | CMS",
     description: "Phần quản lý content của website CMS",
 }
 

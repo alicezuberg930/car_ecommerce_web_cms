@@ -1,14 +1,10 @@
-interface FilterProducts {
-    priceMax?: number,
-    search?: string,
-    category?: string,
-    priceMin?: number,
-    page?: number,
-    limit?: number
-}
-
-interface FilterUsers {
-    page?: number,
-    limit?: number,
-    search?: string,
+interface ProductFilter {
+    brand?: string,
+    carType?: string,
+    status?: string
+    fuelType?: string
+    transmission?: string
+    numberseats?: number
+    minPrice?: number
+    maxPrice?: number
 }

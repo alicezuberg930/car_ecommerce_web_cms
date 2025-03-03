@@ -19,8 +19,8 @@ const geistMono = localFont({
 })
 
 export const metadata: Metadata = {
-  title: "Future Life | Đăng Nhập CMS",
-  description: "Trang đăng nhập quản lý CMS Future Life",
+  title: "63 Car | Đăng Nhập CMS",
+  description: "Trang đăng nhập quản lý CMS của 63 Car",
 }
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

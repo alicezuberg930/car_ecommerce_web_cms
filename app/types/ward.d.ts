@@ -1,2 +1,0 @@
-interface Ward extends Province {
-}

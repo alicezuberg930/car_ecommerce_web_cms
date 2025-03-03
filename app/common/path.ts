@@ -1,8 +1,7 @@
 export const PATH = {
     NEW_USER: "/cms/users/new",
-    CATEGORIES: "/cms/categories",
-    EDIT_CATEGORY: "/cms/categories/edit",
-    NEW_CATEGORY: "/cms/categories/new",
+    CARTYPES: "/cms/cartypes",
+    NEW_CARTYPE: "/cms/cartypes/new",
     ORDERS_ALL: "/cms/orders/list",
     USERS: "/cms/users",
     PRODUCTS: "/cms/products/list",

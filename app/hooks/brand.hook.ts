@@ -1,12 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { API } from "@/app/common/api"
-import { createBrand, deleteBrand, getBrands, updateBrand } from "../services/api.service"
-// import { isAxiosError } from "@/app/common/utils"
 import { toast } from "react-toastify"
+import { API } from "../common/api"
+import { createBrand, deleteBrand, getBrands, updateBrand } from "../services/api.service"
+import { useRouter } from "next/navigation"
+import { PATH } from "../common/path"
 
-export const readBrandsHook = (page: number) => {
+export const getBrandsHook = (page: number) => {
     return useQuery({
-        queryKey: [API.READ_BRANDS, page],
+        queryKey: [API.BRANDS, page],
         queryFn: () => getBrands(),
         placeholderData: (previousData, _) => previousData,
     })
@@ -15,11 +16,11 @@ export const readBrandsHook = (page: number) => {
 export const deleteBrandHook = () => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: (id: string) => deleteBrand(id),
+        mutationFn: ({ id }: { id: string }) => deleteBrand({ id }),
         onSuccess(data) {
             toast.success("Xóa thương hiệu thành công")
             // toast.success(data.message)
-            queryClient.invalidateQueries({ queryKey: [API.READ_BRANDS] })
+            queryClient.invalidateQueries({ queryKey: [API.BRANDS] })
         },
         onError(error) {
             toast.error("Đã có lỗi xảy ra")
@@ -30,16 +31,16 @@ export const deleteBrandHook = () => {
 
 export const createBrandHook = () => {
     const queryClient = useQueryClient()
+    const router = useRouter()
     return useMutation({
-        mutationFn: (brand: Brand) => createBrand(brand),
+        mutationFn: ({ brand }: { brand: Brand }) => createBrand({ brand }),
         onSuccess(data) {
             toast.success("Thêm thương hiệu thành công")
-            // toast.success(data.message)
-            queryClient.invalidateQueries({ queryKey: [API.READ_BRANDS] })
+            router.push(PATH.BRANDS)
+            queryClient.invalidateQueries({ queryKey: [API.BRANDS] })
         },
         onError(error) {
             toast.error("Đã có lỗi xảy ra")
-            // if (isAxiosError(error)) toast.error(error.response?.data.error)
         },
     })
 }
@@ -47,11 +48,11 @@ export const createBrandHook = () => {
 export const updateBrandHook = () => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: ({ id, brand }: { id: string, brand: Brand }) => updateBrand(id, brand),
+        mutationFn: ({ id, brand }: { id: string, brand: Brand }) => updateBrand({ brand, id }),
         onSuccess(data) {
             toast.success("Sửa thương hiệu thành công")
             // toast.success(data.message)
-            queryClient.invalidateQueries({ queryKey: [API.READ_BRANDS] })
+            queryClient.invalidateQueries({ queryKey: [API.BRANDS] })
         },
         onError(error) {
             toast.error("Đã có lỗi xảy ra")

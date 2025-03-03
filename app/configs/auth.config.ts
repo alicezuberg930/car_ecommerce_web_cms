@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { getProfile, login } from "../services/api.service";
+import { login } from "../services/api.service";
 import { AuthError } from "next-auth"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -12,21 +12,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
             authorize: async (credentials) => {
                 try {
-                    const signin = await login(String(credentials.phone), String(credentials.password))
-                    if (signin?.token != null) {
-                        // if (signin?.login != null) {
-                        // const profile = await getProfile(signin.login.token)
-                        const profile = await getProfile(signin?.token)
-                        console.log(profile)
-                        if (profile?.data != null) {
-                            // if (profile?.data?.data != null) {
-                            // profile.data.data["access_token"] = signin.login.token
-                            // return profile.data.data as User
-                            profile.data["access_token"] = signin?.token
-                            return profile.data as User
-                        } else {
-                            throw new CustomError("Access token không hợp lệ")
+                    const response = await login({ phone: credentials.phone, password: credentials.password })
+                    if (response?.token != null) {
+                        const user: User = {
+                            isAdmin: true,
+                            name: "Sang FESSSSSS",
+                            phone: "0932430072",
+                            email: "sang124@gmail.com",
+                            access_token: response?.token
                         }
+                        return user
+                        // const profile = await getProfile(signin?.token)
+                        // if (profile?.data != null) {
+                        //     profile.data["access_token"] = signin?.token
+                        //     return profile.data as User
+                        // } else {
+                        //     throw new CustomError("Access token không hợp lệ")
+                        // }
                     } else {
                         throw new CustomError("Sai thông tin đăng nhập")
                     }

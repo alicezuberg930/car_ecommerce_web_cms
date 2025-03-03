@@ -5,11 +5,11 @@ import Link from 'next/link'
 import React, { ChangeEvent, useState } from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { deleteProductHook, readProductsHook } from '@/app/hooks/product.hooks'
-import CustomPaginator from '@/app/components/CustomPaginator'
+// import CustomPaginator from '@/app/components/CustomPaginator'
 import Image from 'next/image'
 import { PATH } from '@/app/common/path'
 import { formatVND } from '@/app/common/utils'
+import { deleteProductHook, getProductsHook } from '@/app/hooks/product.hook'
 
 const ProductListPage: React.FC = () => {
     // icons
@@ -18,8 +18,8 @@ const ProductListPage: React.FC = () => {
     const [checkBoxes, setCheckBoxes] = useState<number[]>([])
     const [checkAll, setCheckAll] = useState<boolean>(false)
     const [currentPage, setCurrentPage] = useState<number>(1)
-    const { data: products, isLoading } = readProductsHook(currentPage)
-    const deleteHook = deleteProductHook(currentPage)
+    const { data: products, isLoading } = getProductsHook(currentPage)
+    const remove = deleteProductHook(currentPage)
 
     // const dummy: number[] = []
     // for (let i = 0; i <= 8; i++) {
@@ -57,7 +57,9 @@ const ProductListPage: React.FC = () => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Xóa',
             cancelButtonText: 'Hủy'
-        }).then(result => { if (result.isConfirmed) deleteHook.mutate(id) })
+        }).then(result => {
+            if (result.isConfirmed) remove.mutate({ id })
+        })
     }
 
     return (
@@ -168,111 +170,60 @@ const ProductListPage: React.FC = () => {
                                                 </div>
                                             </td>
                                         </tr> :
-                                        products && (products?.data.products as Product[]).map((v, i) => {
-                                            let stock = 0
-                                            v.options?.forEach(option => {
-                                                option.value?.forEach(val => {
-                                                    stock += val.quantity ?? 0
-                                                })
-                                            })
+                                        products && (products?.data as Product[]).map((v, i) => {
                                             return (
-                                                <React.Fragment key={i}>
-                                                    <tr className='bg-white'>
-                                                        <td className='px-2 py-2 md:py-4'>
-                                                            <input onChange={(e) => selectOne(e, i)} checked={checkBoxes.includes(i)} type='checkbox' />
-                                                        </td>
+                                                <tr key={i} className='bg-white'>
+                                                    <td className='px-2 py-2 md:py-4'>
+                                                        <input onChange={(e) => selectOne(e, i)} checked={checkBoxes.includes(i)} type='checkbox' />
+                                                    </td>
 
-                                                        <td className='px-3 py-2 md:py-4'>
-                                                            <div className='h-24 w-24 relative bg-gray-200'>
-                                                                <Image fill loading='lazy' className='object-cover' src={v.images![0] ?? '/logo.png'} alt={v.name!} sizes='width: 100%, height: 100%' />
-                                                            </div>
-                                                        </td>
+                                                    <td className='px-3 py-2 md:py-4'>
+                                                        <div className='h-24 w-24 relative bg-gray-200'>
+                                                            <Image fill loading='lazy' className='object-cover' src={v.images![0] ?? '/logo.png'} alt={v.name!} sizes='width: 100%, height: 100%' />
+                                                        </div>
+                                                    </td>
 
-                                                        <td className='px-3 py-2 md:py-4'>
-                                                            <div className='font-semibold text-ellipsis overflow-hidden line-clamp-2'>
-                                                                {v.name}
-                                                            </div>
-                                                            <div className='text-xs text-ellipsis overflow-hidden line-clamp-1'>
-                                                                <span>ID Sản phẩm: {v._id}</span>
-                                                            </div>
-                                                        </td>
+                                                    <td className='px-3 py-2 md:py-4'>
+                                                        <div className='font-semibold text-ellipsis overflow-hidden line-clamp-2'>
+                                                            {v.name}
+                                                        </div>
+                                                        <div className='text-xs text-ellipsis overflow-hidden line-clamp-1'>
+                                                            <span>ID Sản phẩm: {v._id}</span>
+                                                        </div>
+                                                    </td>
 
-                                                        <td className='px-3 py-2 md:py-4'>
-                                                            <span className='font-medium'>
-                                                                {
-                                                                    v.options![0].value!.length > 0 ? formatVND(v.options![0]?.value![0].price ?? 0) : 0
-                                                                }
-                                                            </span>
-                                                        </td>
+                                                    <td className='px-3 py-2 md:py-4'>
+                                                        <span className='font-medium'>{formatVND(v.price ?? 0)}</span>
+                                                    </td>
 
-                                                        <td className='px-3 py-2 md:py-4'>
-                                                            {stock != 0 ? stock : 'Hết hàng'}
-                                                        </td>
+                                                    <td className='px-3 py-2 md:py-4'>
+                                                        {v.stock! > 0 ? v.stock : 'Hết hàng'}
+                                                    </td>
 
-                                                        <td className='px-3 py-2 md:py-4'>
-                                                            <div className='flex flex-wrap gap-1 text-white'>
-                                                                <Link className='p-2 bg-gray-600 border border-transparent rounded-lg hover:bg-gray-700'
-                                                                    title='Edit' href={`${PATH.EDIT_PRODUCT}/${v._id}`}
-                                                                >
-                                                                    <MdModeEdit size={20} />
-                                                                </Link>
-                                                                <button className='p-2 bg-red-600 border border-transparent rounded-lg hover:bg-red-700'
-                                                                    onClick={() => handleDeleteProduct(v._id!)} title='Delete'
-                                                                >
-                                                                    <FaRegTrashAlt size={20} />
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    {/* Biến thể của sản phẩm */}
-                                                    {
-                                                        v.options!.length > 0 && v.options![0].key != '' &&
-                                                        v.options?.map(option => {
-                                                            return (
-                                                                <React.Fragment key={option.key}>
-                                                                    {
-                                                                        option.value?.map(val => {
-                                                                            return (
-                                                                                <tr key={val._id} className='bg-white border-none'>
-                                                                                    <td colSpan={2} className='px-3 py-2'>
-                                                                                        <div className='w-full flex justify-end'>
-                                                                                            <div className='h-12 w-12 relative bg-gray-200'>
-                                                                                                <Image fill loading='lazy' className='object-cover' src={val.img ?? '/logo.png'} alt={val.val!} sizes='width: 100%, height: 100%' />
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </td>
-
-                                                                                    <td className='px-3 py-2'>
-                                                                                        <span className='text-ellipsis overflow-hidden line-clamp-2'>
-                                                                                            {val.val}
-                                                                                        </span>
-                                                                                    </td>
-
-                                                                                    <td className='px-3 py-2'>
-                                                                                        <span className='font-medium'>{formatVND(val.price!)}</span>
-                                                                                    </td>
-
-                                                                                    <td colSpan={2} className='px-3 py-2'>
-                                                                                        {val.quantity}
-                                                                                    </td>
-                                                                                </tr>
-                                                                            )
-                                                                        })
-                                                                    }
-                                                                </React.Fragment>
-                                                            )
-                                                        })
-                                                    }
-                                                </React.Fragment>
+                                                    <td className='px-3 py-2 md:py-4'>
+                                                        <div className='flex flex-wrap gap-1 text-white'>
+                                                            <Link className='p-2 bg-gray-600 border border-transparent rounded-lg hover:bg-gray-700'
+                                                                title='Edit' href={`${PATH.EDIT_PRODUCT}/${v._id}`}
+                                                            >
+                                                                <MdModeEdit size={20} />
+                                                            </Link>
+                                                            <button className='p-2 bg-red-600 border border-transparent rounded-lg hover:bg-red-700'
+                                                                onClick={() => handleDeleteProduct(v._id!)} title='Delete'
+                                                            >
+                                                                <FaRegTrashAlt size={20} />
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             )
                                         })
                                     }
                                 </tbody>
                             </table>
                         </div>
-                        {isLoading ? <></> : products && products.data &&
+                        {/* {isLoading ? <></> : products && products.data &&
                             < CustomPaginator setCurrentPage={setCurrentPage} currentPage={currentPage} totalPage={products?.data.pagination.totalPages} />
-                        }
+                        } */}
                     </div>
                 </div>
             </div>

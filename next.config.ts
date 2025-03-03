@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'example.com',
+        hostname: 'static.wixstatic.com',
         port: '',
         pathname: '/**',
       },
@@ -23,16 +23,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'fshoppii.com',
+        hostname: 'www.hdwallpaperspulse.com',
         port: '',
-        pathname: '/uploads/**',
-      },
-      {
-        protocol: 'https',
-        port: '',
-        hostname: 'tse1.mm.bing.net',
         pathname: '/**',
-      }
+      },
     ],
   },
   env: {

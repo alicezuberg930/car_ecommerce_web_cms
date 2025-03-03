@@ -1,21 +1,21 @@
 'use client'
 import { icons } from '@/app/common/icons'
 import { PATH } from '@/app/common/path'
-import BrandModal from '@/app/components/BrandModal'
+import CarTypeModal from '@/app/components/CarTypeModal'
 import LoadingShimmer from '@/app/components/LoadingShimmer'
-import { deleteBrandHook, getBrandsHook } from '@/app/hooks/brand.hook'
+import { deleteCarTypeHook, getCarTypesHook } from '@/app/hooks/cartype.hook'
 import Link from 'next/link'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-const BrandsPage: React.FC = () => {
+const CarTypePage: React.FC = () => {
     const { IoIosAddCircleOutline, MdModeEdit, FaRegTrashAlt } = icons
-    const { data: brands, isLoading } = getBrandsHook(1)
-    const remove = deleteBrandHook()
-    const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null)
+    const { data: cartypes, isLoading } = getCarTypesHook(1)
+    const remove = deleteCarTypeHook()
+    const [selectedCarType, setSelectedCarType] = useState<CarType | null>(null)
 
-    const deleteBrandAction = (id: string) => {
+    const deleteCarTypeAction = (id: string) => {
         withReactContent(Swal).fire({
             title: 'Bạn có chắc chắn không?',
             text: 'Bạn sẽ không thể đảo ngược hành động',
@@ -35,7 +35,7 @@ const BrandsPage: React.FC = () => {
             <div className='py-5 px-2 md:px-6'>
                 <div className='flex justify-between items-center mb-2 font-semibold text-2xl'>
                     <h2>Thương hiệu</h2>
-                    <Link href={PATH.NEW_BRAND} className='flex items-center gap-1 bg-blue-300 px-4 py-2 rounded-xl font-medium text-sm text-white'>
+                    <Link href={PATH.NEW_CARTYPE} className='flex items-center gap-1 bg-blue-300 px-4 py-2 rounded-xl font-medium text-sm text-white'>
                         <IoIosAddCircleOutline className='w-5 h-5' />
                         <span>Thêm mới</span>
                     </Link>
@@ -70,12 +70,7 @@ const BrandsPage: React.FC = () => {
                                         </th>
                                         <th className='bg-gray-50 px-3 py-2 md:py-3'>
                                             <button className='flex items-center space-x-1 font-medium text-left text-xs focus:underline uppercase leading-4 tracking-wider group focus:outline-none'>
-                                                <span>Quốc gia</span>
-                                            </button>
-                                        </th>
-                                        <th className='bg-gray-50 px-3 py-2 md:py-3'>
-                                            <button className='flex items-center space-x-1 font-medium text-left text-xs focus:underline uppercase leading-4 tracking-wider group focus:outline-none'>
-                                                <span>Logo</span>
+                                                <span>Mô tả</span>
                                             </button>
                                         </th>
                                         <th className='bg-gray-50 px-3 py-2 md:py-3'>
@@ -96,7 +91,7 @@ const BrandsPage: React.FC = () => {
                                                     </div>
                                                 </td>
                                             </tr> :
-                                            brands.brands && (brands.brands as Brand[]).map((v, i) => {
+                                            cartypes.data && (cartypes.data as CarType[]).map((v, i) => {
                                                 return (
                                                     <tr key={i} className='bg-white'>
                                                         <td className='px-3 py-2 md:py-4 text-gray-900 text-sm leading-5 whitespace-normal'>
@@ -107,25 +102,19 @@ const BrandsPage: React.FC = () => {
 
                                                         <td className='px-3 py-2 md:py-4 text-gray-900 text-sm leading-5 whitespace-normal'>
                                                             <div className='text-gray-700'>
-                                                                <span className='font-medium'>{v.country}</span>
-                                                            </div>
-                                                        </td>
-
-                                                        <td className='px-3 py-2 md:py-4 text-gray-900 text-sm leading-5 whitespace-normal'>
-                                                            <div className='h-24 w-24'>
-                                                                <img className='object-cover w-full h-full' src={v.logo ?? '/logo.png'} />
+                                                                <span className='font-medium'>{v.description}</span>
                                                             </div>
                                                         </td>
 
                                                         <td className='px-3 py-2 md:py-4 whitespace-normal'>
                                                             <div className='flex flex-wrap gap-1 text-white'>
                                                                 <button className='p-2 bg-gray-600 border border-transparent rounded-lg hover:bg-gray-700'
-                                                                    onClick={() => setSelectedBrand(v)} title='Edit'
+                                                                    onClick={() => setSelectedCarType(v)} title='Edit'
                                                                 >
                                                                     <MdModeEdit size={20} />
                                                                 </button>
                                                                 <button className='p-2 bg-red-600 border border-transparent rounded-lg hover:bg-red-700'
-                                                                    onClick={() => deleteBrandAction(v._id!)} title='Delete'
+                                                                    onClick={() => deleteCarTypeAction(v._id!)} title='Delete'
                                                                 >
                                                                     <FaRegTrashAlt size={20} />
                                                                 </button>
@@ -146,14 +135,14 @@ const BrandsPage: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div className={`w-full h-screen fixed inset-0 z-20 overflow-y-scroll ${selectedBrand != null ? 'block' : 'hidden'}`}>
+            <div className={`w-full h-screen fixed inset-0 z-20 overflow-y-scroll ${selectedCarType != null ? 'block' : 'hidden'}`}>
                 <div className='flex items-end justify-center min-h-screen px-4 py-6 text-center sm:block sm:p-0'>
                     <div className='fixed inset-0 transition-opacity'>
                         <div className='absolute inset-0 bg-gray-500 opacity-75'></div>
                     </div>
                     <div className='z-30 relative inline-block bg-white shadow-xl my-8 sm:align-middle max-w-5xl rounded-md w-full'>
                         <div className='px-4 py-5 bg-white text-left rounded-md'>
-                            {selectedBrand ? <BrandModal selectedBrand={selectedBrand} setSelected={setSelectedBrand} /> : <></>}
+                            {selectedCarType ? <CarTypeModal selectedCarType={selectedCarType} setSelected={setSelectedCarType} /> : <></>}
                         </div>
                     </div>
                 </div>
@@ -162,4 +151,4 @@ const BrandsPage: React.FC = () => {
     )
 }
 
-export default BrandsPage
+export default CarTypePage
