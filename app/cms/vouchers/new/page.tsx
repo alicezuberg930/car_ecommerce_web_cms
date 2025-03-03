@@ -1,6 +1,6 @@
 "use client"
 import CustomDatePicker from "@/app/components/CustomDatePicker"
-import { readProductsHook } from "@/app/hooks/product.hooks"
+import { getProductsHook } from "@/app/hooks/product.hook"
 import { readUserHook } from "@/app/hooks/user.hooks"
 import { createVoucherHook } from "@/app/hooks/voucher.hook"
 import { setIsLoadingOverlay } from "@/app/services/common.slice"
@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux"
 const NewVoucherPage: React.FC = () => {
     const create = createVoucherHook()
     const dispatch = useDispatch()
-    const { data: products, isLoading: loadingProducts } = readProductsHook(1, Infinity)
+    const { data: products, isLoading: loadingProducts } = getProductsHook(1)
     const { data: users, isLoading: loadingUsers } = readUserHook(1, Infinity, "user")
     const [applicableProducts, setApplicableProducts] = useState<string[]>([])
     const [applicableUsers, setApplicableUsers] = useState<string[]>([])
@@ -22,7 +22,7 @@ const NewVoucherPage: React.FC = () => {
         const entries = Object.fromEntries(formData.entries())
         const products = applicableProducts.map(product => product.split('-')[0])
         const users = applicableUsers.map(user => user.split('-')[0])
-        let voucher: Voucher = { ...entries, applicableProducts: products, applicableUsers: users }
+        let voucher: any = { ...entries, applicableProducts: products, applicableUsers: users }
         create.mutate(voucher)
         dispatch(setIsLoadingOverlay(false))
     }
