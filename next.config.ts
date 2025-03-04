@@ -30,7 +30,9 @@ const nextConfig: NextConfig = {
     ],
   },
   env: {
-    API_URL: process.env.API_URL
+    API_URL: process.env.API_URL,
+    AUTH_SECRET: process.env.AUTH_SECRET,
+    AUTH_TRUST_HOST: process.env.AUTH_TRUST_HOST
   }
   /* config options here */
 };
