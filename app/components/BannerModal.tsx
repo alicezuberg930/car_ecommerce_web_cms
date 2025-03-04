@@ -28,34 +28,30 @@ const BannerModal: React.FC<{ selectedBanner?: Banner, setSelected?: Dispatch<Se
 
     const handleBrand = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (images.length < 1) {
-            toast.error("Cần ít nhất 1 ảnh cho thương hiệu")
-            return
-        }
         dispatch(setIsLoadingOverlay(true))
         const formData = new FormData(e.currentTarget)
         const banner: Banner = Object.fromEntries(formData.entries())
         let tempImages = images.map(image => image.url)
-        if (images[0].file != null) {
-            for (let i = 0; i < images.length; i++) {
-                formData.set('file', images[0].file!)
-                await new Promise(resolve => {
-                    uploadHook.mutate({ file: formData }, {
-                        onSuccess(data) {
-                            tempImages = data.url
-                            resolve(null)
-                        }
-                    })
-                })
-            }
-        }
-        banner["imageUrl"] = tempImages
+        // if (images[0].file != null) {
+        //     for (let i = 0; i < images.length; i++) {
+        //         formData.set('file', images[0].file!)
+        //         await new Promise(resolve => {
+        //             uploadHook.mutate({ file: formData }, {
+        //                 onSuccess(data) {
+        //                     tempImages = data.url
+        //                     resolve(null)
+        //                 }
+        //             })
+        //         })
+        //     }
+        // }
+        banner["imageUrl"] = ["https://tse3.mm.bing.net/th?id=OIP.doZG3FI3PhAgphVd57FONgHaEK&pid=Api&P=0&h=180"]
+        // banner["imageUrl"] = tempImages
         if (selectedBanner != null) {
-            // nếu đã chọn thương hiệu -> cập nhật
-            update.mutate({ id: selectedBanner._id!, banner: banner }, { onSuccess() { setSelected!(null) } })
+            update.mutate({ banner, id: selectedBanner._id! })
+            setSelected!(null)
         } else {
-            // không chọn thương hiệu đã chọn -> tạo mới
-            create.mutate(banner)
+            create.mutate({ banner })
             router.push(PATH.BANNERS)
         }
         dispatch(setIsLoadingOverlay(false))

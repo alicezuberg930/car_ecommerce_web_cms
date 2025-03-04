@@ -12,4 +12,8 @@ export const API = {
     "DELETE_PRODUCT": (id: string) => `/product/delete/${id}`,
     "CREATE_PRODUCT": "/product/create",
     "UPDATE_PRODUCT": (id: string) => `/product/update/${id}`,
+    "CREATE_BANNER": "/banner/create",
+    "UPDATE_BANNER": (id: string) => `/banner/update/${id}`,
+    "DELETE_BANNER": (id: string) => `/banner/delete/${id}`,
+    "BANNERS": "/banner/getList"
 }

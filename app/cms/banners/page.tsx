@@ -3,7 +3,7 @@ import { icons } from '@/app/common/icons'
 import { PATH } from '@/app/common/path'
 import BannerModal from '@/app/components/BannerModal'
 import LoadingShimmer from '@/app/components/LoadingShimmer'
-import { deleteBannerHook, readBannersHook } from '@/app/hooks/banners.hooks'
+import { deleteBannerHook, getBannersHook } from '@/app/hooks/banners.hooks'
 import Link from 'next/link'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
@@ -11,7 +11,7 @@ import withReactContent from 'sweetalert2-react-content'
 
 const BannersPage: React.FC = () => {
     const { MdCancel, IoIosAddCircleOutline, MdModeEdit, FaCheck, CiCircleCheck, FaRegTrashAlt } = icons
-    const { data: banners, isLoading } = readBannersHook(1)
+    const { data: banners, isLoading } = getBannersHook()
     const deleteHook = deleteBannerHook()
     const [selectedBanner, setSelectedBanner] = useState<Banner | null>(null)
 
@@ -26,7 +26,7 @@ const BannersPage: React.FC = () => {
             confirmButtonText: 'Xóa',
             cancelButtonText: 'Hủy'
         }).then(result => {
-            if (result.isConfirmed) deleteHook.mutate(id)
+            if (result.isConfirmed) deleteHook.mutate({ id })
         })
     }
 
@@ -91,7 +91,7 @@ const BannersPage: React.FC = () => {
                                                     </div>
                                                 </td>
                                             </tr> :
-                                            banners && (banners.banners as Banner[]).map((v, i) => {
+                                            banners.banners && (banners.banners as Banner[]).map((v, i) => {
                                                 return (
                                                     <tr key={i} className='bg-white'>
                                                         <td className='px-3 py-2 md:py-4 text-gray-900 text-sm leading-5 whitespace-normal'>

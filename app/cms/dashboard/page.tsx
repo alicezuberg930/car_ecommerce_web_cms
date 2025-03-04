@@ -155,7 +155,7 @@ const DashboardPage: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div className="bg-red-300 flex-1 rounded-xl px-3 py-6 table">
                                 <div className="flex-1 table-cell align-middle">
                                     <h1 className="font-bold text-3xl">539</h1>
@@ -335,6 +335,6 @@ const DashboardPage: React.FC = () => {
             </div>
         </main>
     )
-} 
+}
 
 export default DashboardPage

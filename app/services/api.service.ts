@@ -75,6 +75,27 @@ export const deleteCarType = async ({ id }: { id: string }) => {
     return response.data
 }
 
+// Banner
+export const createBanner = async ({ banner }: { banner: Banner }) => {
+    const response = await axioInstance<any>({ url: API.CREATE_BANNER, method: "POST", data: banner })
+    return response.data
+}
+
+export const updateBanner = async ({ id, banner }: { id: string, banner: Banner }) => {
+    const response = await axioInstance<any>({ url: API.UPDATE_BANNER(id), method: "PUT", data: banner })
+    return response.data
+}
+
+export const deleteBanner = async ({ id }: { id: string }) => {
+    const response = await axioInstance<any>({ url: API.DELETE_BANNER(id), method: "DELETE" })
+    return response.data
+}
+
+export const getBanners = async () => {
+    const response = await axioInstance<any>({ url: API.BANNERS, method: "GET" })
+    return response.data
+}
+
 // to be deleted
 // admin 
 export const lockAccount = async (lockReason: string) => {
@@ -100,23 +121,6 @@ export const getSiteConfigs = async () => {
 
 export const updateSiteConfigs = async (config: any) => {
     return await axioInstance<any>({ url: "API.CONFIGS", method: "POST", data: config }).then(res => res.data)
-}
-
-// Banner
-export const createBanner = async (banner: any) => {
-    return await axioInstance<any>({ url: "API.CREATE_BANNER", method: "POST", data: banner }).then(res => res.data)
-}
-
-export const updateBanner = async (id: string, banner: any) => {
-    return await axioInstance<any>({ url: `${"API.UPDATE_BANNER"}/${id}`, method: "PUT", params: { id }, data: banner }).then(res => res.data)
-}
-
-export const deleteBanner = async (id: string) => {
-    return await axioInstance<any>({ url: `${"API.DELETE_BANNER"}/${id}`, method: "DELETE", params: { id } }).then(res => res.data)
-}
-
-export const getBanners = async () => {
-    return await axioInstance<any>({ url: "API.READ_BANNERS", method: "GET" }).then(res => res.data)
 }
 
 // Voucher
