@@ -17,6 +17,6 @@ export const PATH = {
     NEW_BRAND: "/cms/brands/new",
     NEW_BANNER: "/cms/banners/new",
     NEW_SHIPPING_ADDRESS: "/cms/shipping/new",
-    VOUCHERS: "/cms/vouchers",
-    NEW_VOUCHERS: "/cms/vouchers/new"
+    NEWS: "/cms/news",
+    NEW_NEWS: "/cms/news/new"
 }

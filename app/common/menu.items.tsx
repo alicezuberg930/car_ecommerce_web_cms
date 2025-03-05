@@ -2,7 +2,7 @@ import path from "path"
 import { icons } from "./icons"
 import { PATH } from "./path"
 
-const { CiBarcode, FaShippingFast, MdBrandingWatermark, MdFileUpload, BiCategory, PiFlagBanner, MdOutlinePayment, MdOutlinePayments, FaUser, FaBoxOpen, CiShoppingBasket, PiShippingContainer, VscSettings, LuLayoutDashboard } = icons
+const { CiBarcode, FaNewspaper, MdBrandingWatermark, MdFileUpload, BiCategory, PiFlagBanner, MdOutlinePayment, MdOutlinePayments, FaUser, FaBoxOpen, CiShoppingBasket, PiShippingContainer, VscSettings, LuLayoutDashboard } = icons
 
 const menuItems = [
     {
@@ -15,8 +15,8 @@ const menuItems = [
     {
         isAuthorized: (check: boolean) => check || !check,
         isParent: false,
-        name: "Mã khuyến mãi",
-        path: PATH.VOUCHERS,
+        name: "Tin tức",
+        path: PATH.NEWS,
         icon: <CiBarcode size={20} />
     },
     {

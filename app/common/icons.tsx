@@ -1,4 +1,4 @@
-import { FaBars, FaCheck, FaArrowUp, FaArrowDown, FaChevronRight, FaChevronLeft, FaUser, FaBox, FaChevronDown, FaRegShareSquare, FaBan, FaGithub, FaLaravel, FaFilter, FaEye, FaRegTrashAlt, FaBoxOpen, FaShippingFast } from "react-icons/fa"
+import { FaBars, FaCheck, FaArrowUp, FaArrowDown, FaChevronRight, FaChevronLeft, FaUser, FaBox, FaChevronDown, FaRegShareSquare, FaBan, FaGithub, FaLaravel, FaFilter, FaEye, FaRegTrashAlt, FaBoxOpen, FaShippingFast, FaNewspaper } from "react-icons/fa"
 import { MdOutlinePayments, MdLogout, MdCancel, MdModeEdit, MdOutlineCancel, MdOutlinePayment, MdFileUpload, MdBrandingWatermark } from "react-icons/md"
 import { TbLayoutDashboard } from "react-icons/tb"
 import { CiShoppingBasket, CiBellOn, CiLock, CiUnlock, CiCircleCheck, CiBarcode } from "react-icons/ci"
@@ -14,6 +14,7 @@ import { RiImageAddFill } from "react-icons/ri";
 import { HiOutlineXMark } from "react-icons/hi2";
 
 export const icons = {
+    FaNewspaper,
     FaLaravel,
     FaGithub,
     MdCancel,

@@ -75,7 +75,7 @@ export const deleteCarType = async ({ id }: { id: string }) => {
     return response.data
 }
 
-// Banner
+// banner
 export const createBanner = async ({ banner }: { banner: Banner }) => {
     const response = await axioInstance<any>({ url: API.CREATE_BANNER, method: "POST", data: banner })
     return response.data
@@ -93,6 +93,22 @@ export const deleteBanner = async ({ id }: { id: string }) => {
 
 export const getBanners = async () => {
     const response = await axioInstance<any>({ url: API.BANNERS, method: "GET" })
+    return response.data
+}
+
+// tin tức
+export const getNews = async () => {
+    const response = await axioInstance<any>({ url: API.NEWS, method: "GET" })
+    return response.data
+}
+
+export const createNews = async ({ n }: { n: New }) => {
+    const response = await axioInstance<any>({ url: API.CREATE_NEW, method: "POST", data: n })
+    return response.data
+}
+
+export const updateNews = async ({ id, n }: { id: string, n: New }) => {
+    const response = await axioInstance<any>({ url: API.UDPATE_NEW(id), method: "PUT", data: n })
     return response.data
 }
 
@@ -121,17 +137,4 @@ export const getSiteConfigs = async () => {
 
 export const updateSiteConfigs = async (config: any) => {
     return await axioInstance<any>({ url: "API.CONFIGS", method: "POST", data: config }).then(res => res.data)
-}
-
-// Voucher
-export const getVouchers = async () => {
-    return await axioInstance<any>({ url: "API.READ_VOUCHERS", method: "GET" }).then(res => res.data)
-}
-
-export const createVoucher = async (voucher: any) => {
-    return await axioInstance<any>({ url: "API.CREATE_VOUCHER", method: "POST", data: voucher }).then(res => res.data)
-}
-
-export const approveVoucher = async (id: string) => {
-    return await axioInstance<any>({ url: "API.APPROVE_VOUCHER(id)", method: "POST" }).then(res => res.data)
 }

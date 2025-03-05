@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { PATH } from "../common/path"
 import { setIsLoadingOverlay } from "../services/common.slice"
 import { useDispatch } from "react-redux"
-import { createBannerHook, updateBannerHook } from "../hooks/banners.hooks"
+import { createBannerHook, updateBannerHook } from "../hooks/banner.hook"
 
 const BannerModal: React.FC<{ selectedBanner?: Banner, setSelected?: Dispatch<SetStateAction<Banner | null>> }> = ({ selectedBanner, setSelected }) => {
     const [images, setImages] = useState<{ file: File | null, url: string }[]>([])

@@ -15,5 +15,9 @@ export const API = {
     "CREATE_BANNER": "/banner/create",
     "UPDATE_BANNER": (id: string) => `/banner/update/${id}`,
     "DELETE_BANNER": (id: string) => `/banner/delete/${id}`,
-    "BANNERS": "/banner/getList"
+    "BANNERS": "/banner/getList",
+    "NEWS": "/news/listnews",
+    "CREATE_NEW": "/news/create",
+    "UDPATE_NEW": (id: string) => `/news/upnews/${id}`,
+    "CREATE_CONTACT": "/contact/create"
 }
