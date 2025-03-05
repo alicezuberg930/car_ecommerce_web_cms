@@ -112,6 +112,17 @@ export const updateNews = async ({ id, n }: { id: string, n: New }) => {
     return response.data
 }
 
+// thông tin
+export const getSiteConfigs = async () => {
+    return await axioInstance<any>({ url: "API.CONFIGS", method: "GET" }).then(res => res.data)
+}
+
+export const createContact = async ({ contact }: { contact: Contact }) => {
+    const response = await axioInstance<any>({ url: API.CREATE_CONTACT, method: "POST", data: contact })
+    return response.data
+}
+
+
 // to be deleted
 // admin 
 export const lockAccount = async (lockReason: string) => {
@@ -128,13 +139,4 @@ export const getUsers = async (filter?: any) => {
 
 export const createUser = async (user: User) => {
     return await axioInstance<any>({ url: "API.CREATE_USER", method: "POST", data: user }).then(res => res.data)
-}
-
-// Cấu hình trang
-export const getSiteConfigs = async () => {
-    return await axioInstance<any>({ url: "API.CONFIGS", method: "GET" }).then(res => res.data)
-}
-
-export const updateSiteConfigs = async (config: any) => {
-    return await axioInstance<any>({ url: "API.CONFIGS", method: "POST", data: config }).then(res => res.data)
 }

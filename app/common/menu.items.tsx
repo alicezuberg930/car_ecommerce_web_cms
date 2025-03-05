@@ -73,22 +73,11 @@ const menuItems = [
     },
     {
         isAuthorized: (check: boolean) => check || !check,
-        isParent: true,
-        name: "Cấu hình",
+        isParent: false,
+        name: "Liên lạc",
         icon: <VscSettings size={20} />,
         toggleType: "isConfig",
-        children: [
-            // {
-            //     name: "Cấu hình email",
-            //     path: PATH.SITE_CONFIG,
-            //     icon: <VscSettings size={20} />,
-            // },
-            {
-                name: "Cấu hình site",
-                path: PATH.SITE_CONFIG,
-                icon: <VscSettings size={20} />,
-            }
-        ]
+        path: PATH.CONTACT,
     },
     // {
     //     isAuthorized: (check: boolean) => !check,

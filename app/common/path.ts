@@ -6,7 +6,7 @@ export const PATH = {
     PRODUCTS: "/cms/products/list",
     NEW_PRODUCT: "/cms/products/new",
     EDIT_PRODUCT: "/cms/products/edit",
-    SITE_CONFIG: "/cms/config/site",
+    CONTACT: "/cms/contact",
     LOGIN: "/",
     PROFILE: "/cms/profile",
     DASHBOARD: "/cms/dashboard",
@@ -18,5 +18,5 @@ export const PATH = {
     NEW_BANNER: "/cms/banners/new",
     NEW_SHIPPING_ADDRESS: "/cms/shipping/new",
     NEWS: "/cms/news",
-    NEW_NEWS: "/cms/news/new"
+    NEW_NEWS: "/cms/news/new",
 }

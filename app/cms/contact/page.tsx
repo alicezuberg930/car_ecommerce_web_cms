@@ -2,22 +2,21 @@
 import React, { FormEvent, useState } from "react";
 import dynamic from "next/dynamic";
 import ContactConfiguration from "@/app/components/ContactConfig";
-import { readSiteConfigsHook, updateSiteConfigsHook } from "@/app/hooks/site.config.hooks";
+import { createContactHook, getContactHook } from "@/app/hooks/contact.hook";
 const CustomCKEditor = dynamic(() => import('@/app/components/CustomCKEditor'), {
     ssr: false // Prevents Editor.js from being included in server-side rendering
 });
 
-const ConfigurationPage: React.FC = () => {
-    const { data: configs, isLoading, error } = readSiteConfigsHook()
-    const mutate = updateSiteConfigsHook()
+const ContactPage: React.FC = () => {
+    const { data: contacts } = getContactHook()
+    const create = createContactHook()
     const [companyInfo, setCompanyInfo] = useState<string>("")
 
-    const updateSiteConfigs = (e: FormEvent<HTMLFormElement>) => {
+    const updateSitecontacts = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget);
-        const config: any = Object.fromEntries(formData.entries())
-        config["footerContact"] = getContacts()
-        mutate.mutate(config)
+        const contact: Contact = Object.fromEntries(formData.entries())
+        create.mutate({ contact })
     }
 
     const getContacts = () => {
@@ -40,7 +39,7 @@ const ConfigurationPage: React.FC = () => {
                     <h3 className='text-red-500 font-semibold'>Thông tin công ty</h3>
                 </div>
                 <div className='p-3'>
-                    <form onSubmit={(e) => updateSiteConfigs(e)}>
+                    <form onSubmit={(e) => updateSitecontacts(e)}>
                         <table className='w-full'>
                             <tbody>
                                 <tr className='bg-[#347ab6] text-white'>
@@ -51,56 +50,56 @@ const ConfigurationPage: React.FC = () => {
                                 <tr>
                                     <td className='py-2'>Công ty<b className='text-red-500'>*</b></td>
                                     <td className='py-2'>
-                                        <input defaultValue={configs?.data?.company} name="company" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type='text' required autoComplete='off' />
+                                        <input defaultValue={contacts?.data?.company} name="company" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type='text' required autoComplete='off' />
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td className='py-2'>Địa chỉ<b className='text-red-500'>*</b></td>
                                     <td className='py-2'>
-                                        <input defaultValue={configs?.data?.address} name="address" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type='text' required autoComplete='off' />
+                                        <input defaultValue={contacts?.data?.address} name="address" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type='text' required autoComplete='off' />
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td className='py-2'>Tel/Điện thoại bàn<b className='text-red-500'>*</b></td>
                                     <td className='py-2'>
-                                        <input defaultValue={configs?.data?.telephone} name="telephone" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type='text' required autoComplete='off' maxLength={11} />
+                                        <input defaultValue={contacts?.data?.telephone} name="telephone" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type='text' required autoComplete='off' maxLength={11} />
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td className='py-2'>Điện thoại chính<b className='text-red-500'>*</b></td>
                                     <td className='py-2'>
-                                        <input defaultValue={configs?.data?.phone} name="phone" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type='text' required autoComplete='off' maxLength={11} />
+                                        <input defaultValue={contacts?.data?.phone} name="phone" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type='text' required autoComplete='off' maxLength={11} />
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td className='py-2'>Hotline<b className='text-red-500'>*</b></td>
                                     <td className='py-2'>
-                                        <input defaultValue={configs?.data?.hotline} name="hotline" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type='text' required autoComplete='off' maxLength={10} />
+                                        <input defaultValue={contacts?.data?.hotline} name="hotline" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type='text' required autoComplete='off' maxLength={10} />
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td className='py-2'>Email chính<b className='text-red-500'>*</b></td>
                                     <td className='py-2'>
-                                        <input defaultValue={configs?.data?.email} name="email" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type='text' required autoComplete='off' />
+                                        <input defaultValue={contacts?.data?.email} name="email" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type='text' required autoComplete='off' />
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td className='py-2'>Giờ làm việc<b className='text-red-500'>*</b></td>
                                     <td className='py-2'>
-                                        <textarea defaultValue={configs?.data?.openHour} name="openHour" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' />
+                                        <textarea defaultValue={contacts?.data?.openHour} name="openHour" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' />
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td className='py-2'>Footer: thông tin giới thiệu</td>
                                     <td className='py-2'>
-                                        <textarea defaultValue={configs?.data?.footerInfo} name="footerInfo" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' />
+                                        <textarea defaultValue={contacts?.data?.footerInfo} name="footerInfo" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' />
                                     </td>
                                 </tr>
 
@@ -112,17 +111,6 @@ const ConfigurationPage: React.FC = () => {
                                 </tr>
 
                                 <tr className='bg-[#347ab6] text-white'>
-                                    <td></td>
-                                    <td className='font-bold text-sm py-3'>Footer: thông tin liên hệ</td>
-                                </tr>
-                                {
-                                    configs?.data?.footerContact && configs?.data?.footerContact.map((contact: any, i: any) => {
-                                        return (
-                                            <ContactConfiguration key={i} i={i + 1} contact={contact} />
-                                        )
-                                    })
-                                }
-                                <tr className='bg-[#347ab6] text-white'>
                                     <td >&nbsp;</td>
                                     <td className='font-bold text-sm py-3'>Chat online</td>
                                 </tr>
@@ -130,14 +118,14 @@ const ConfigurationPage: React.FC = () => {
                                 <tr>
                                     <td className='py-2'>URL: Zalo OA</td>
                                     <td className='py-2'>
-                                        <input defaultValue={configs?.data?.zaloChatURL} name="zaloChatURL" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type="text" />
+                                        <input defaultValue={contacts?.data?.zaloChatURL} name="zaloChatURL" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type="text" />
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td className='py-2'>URL: FB Messenger</td>
                                     <td className='py-2'>
-                                        <input defaultValue={configs?.data?.facebookChatURL} name="facebookChatURL" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type="text" />
+                                        <input defaultValue={contacts?.data?.facebookChatURL} name="facebookChatURL" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type="text" />
                                     </td>
                                 </tr>
 
@@ -148,7 +136,7 @@ const ConfigurationPage: React.FC = () => {
                                 <tr>
                                     <td className='py-2'>Facebook</td>
                                     <td className='py-2'>
-                                        <input defaultValue={configs?.data?.facebookPage} name="facebookPage" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type="text" />
+                                        <input defaultValue={contacts?.data?.facebookPage} name="facebookPage" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type="text" />
                                     </td>
                                 </tr>
                                 {/* <tr>
@@ -161,7 +149,7 @@ const ConfigurationPage: React.FC = () => {
                                 <tr>
                                     <td className='py-2'>Youtube</td>
                                     <td className='py-2'>
-                                        <input defaultValue={configs?.data?.youtubePage} name="youtubePage" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type="text" />
+                                        <input defaultValue={contacts?.data?.youtubePage} name="youtubePage" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type="text" />
                                     </td>
                                 </tr>
                                 {/* <tr>
@@ -174,7 +162,7 @@ const ConfigurationPage: React.FC = () => {
                                 <tr>
                                     <td className='py-2'>Google</td>
                                     <td className='py-2'>
-                                        <input defaultValue={configs?.data?.googlePage} name="googlePage" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type="text" />
+                                        <input defaultValue={contacts?.data?.googlePage} name="googlePage" className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' type="text" />
                                     </td>
                                 </tr>
 
@@ -195,7 +183,7 @@ const ConfigurationPage: React.FC = () => {
                                             <br />
                                             - Pase nội dùng vừa copy vào textbox bên dưới
                                         </p>
-                                        <textarea defaultValue={configs?.data?.googleMap} name="googleMap" rows={5} className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' />
+                                        <textarea defaultValue={contacts?.data?.googleMap} name="googleMap" rows={5} className='outline-none rounded-md border p-2 border-gray-300 w-full focus:border-blue-500' />
                                     </td>
                                 </tr>
 
@@ -218,4 +206,4 @@ const ConfigurationPage: React.FC = () => {
     );
 }
 
-export default ConfigurationPage
+export default ContactPage
