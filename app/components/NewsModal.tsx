@@ -100,9 +100,10 @@ const NewsModal: React.FC<{ selectedNew?: New, setSelected?: Dispatch<SetStateAc
                                     <td className='py-3 w-32'>Category<b className='text-red-500'>*</b></td>
                                     <td className='py-3'>
                                         <select defaultValue={selectedNew?.category} className='border-gray-300 p-2 border rounded-md w-full outline-none' name="category">
-                                            <option value='review'>review</option>
-                                            <option value='review'>review</option>
-                                            <option value='review'>review</option>
+                                            <option value='review'>Xem xét</option>
+                                            <option value='topsellingcars'>Top bán</option>
+                                            <option value='event'>Sự kiện</option>
+                                            <option value='guide'>Hướng dẫn</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -110,7 +111,11 @@ const NewsModal: React.FC<{ selectedNew?: New, setSelected?: Dispatch<SetStateAc
                                 <tr>
                                     <td className='py-3 w-32' defaultValue={selectedNew?.tags ?? ""}>Tags<b className='text-red-500'>*</b></td>
                                     <td className='py-3'>
-                                        <input className='border-gray-300 p-2 border focus:border-blue-500 rounded-md w-full outline-none' type="text" required name="tags" />
+                                        <select defaultValue={selectedNew?.category} className='border-gray-300 p-2 border rounded-md w-full outline-none' name="tags">
+                                            <option value='hot'>Nóng</option>
+                                            <option value='review'>Xem xét</option>
+                                            <option value='new'>Tin mới</option>
+                                        </select>
                                     </td>
                                 </tr>
 

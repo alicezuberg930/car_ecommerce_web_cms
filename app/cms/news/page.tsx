@@ -99,7 +99,7 @@ const NewsPage: React.FC = () => {
 
                                                         <td className="px-3 py-2 md:py-4 text-gray-900 text-sm leading-5 whitespace-normal">
                                                             <div className="text-gray-700">
-                                                                <span className="font-medium">{v.category}</span>
+                                                                <span className="font-medium p-2 rounded-md bg-orange-400 text-white">{v.category}</span>
                                                             </div>
                                                         </td>
 
