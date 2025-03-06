@@ -28,7 +28,7 @@ const NewsPage: React.FC = () => {
                             <table className="divide-y divide-gray-200 min-w-full">
                                 <thead>
                                     <tr>
-                                        <th className="bg-gray-50 px-3 py-2 md:py-3">
+                                        <th className="bg-gray-50 px-3 py-2 md:py-3 w-48">
                                             <button className="flex items-center space-x-1 font-medium text-left text-xs focus:underline uppercase leading-4 tracking-wider group focus:outline-none">
                                                 <span>Tên</span>
                                             </button>
@@ -80,7 +80,7 @@ const NewsPage: React.FC = () => {
                                                 return (
                                                     <tr key={v._id} className="bg-white">
                                                         <td className="px-3 py-2 md:py-4 text-gray-900 text-sm leading-5 whitespace-normal">
-                                                            <div className="text-gray-700">
+                                                            <div className='font-semibold text-ellipsis overflow-hidden line-clamp-2'>
                                                                 <span className="font-medium">{v.title}</span>
                                                             </div>
                                                         </td>
@@ -94,8 +94,6 @@ const NewsPage: React.FC = () => {
                                                         <td className="px-3 py-2 md:py-4 text-gray-900 text-sm leading-5 whitespace-normal">
                                                             <div className='font-semibold text-ellipsis overflow-hidden line-clamp-2'>
                                                                 {v.content}
-                                                            </div>
-                                                            <div className="text-gray-700">
                                                             </div>
                                                         </td>
 

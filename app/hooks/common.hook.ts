@@ -1,13 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { uploadFile } from "@/app/services/api.service";
-import { isAxiosError } from "@/app/common/utils";
 import { toast } from "react-toastify";
 
-export const uploadFilesHook = () => {
+export const uploadFileHook = () => {
     return useMutation({
         mutationFn: ({ file }: { file: FormData }) => uploadFile({ file }),
         onError(error) {
-            if (isAxiosError(error)) toast.error(error?.response?.data.error)
+            toast.error("Tải ảnh lên thất bại")
         },
     })
 }

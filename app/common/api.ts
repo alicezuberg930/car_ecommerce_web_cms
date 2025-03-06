@@ -23,5 +23,6 @@ export const API = {
     "IMAGES": "/images/getlist",
     "CREATE_IMAGE": "/images/create",
     "DELETE_IMAGE": (id: string) => `/images/del/${id}`,
-    "UPDATE_IMAGE": (id: string) => `/images/update/${id}`
+    "UPDATE_IMAGE": (id: string) => `/images/update/${id}`,
+    "FILE_UPLOAD": "/files/upload/image"
 }

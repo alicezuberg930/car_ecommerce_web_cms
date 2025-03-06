@@ -1,15 +1,15 @@
 import React, { Dispatch, FormEvent, SetStateAction, useEffect, useState } from "react"
-import { uploadFilesHook } from "../hooks/common.hooks"
 import CustomImagePicker from "./CustomImagePicker"
 import { setIsLoadingOverlay } from "../services/common.slice"
 import { useDispatch } from "react-redux"
 import { createBrandHook, updateBrandHook } from "../hooks/brand.hook"
+import { uploadFileHook } from "../hooks/common.hook"
 
 const BrandModal: React.FC<{ selectedBrand?: Brand, setSelected?: Dispatch<SetStateAction<Brand | null>> }> = ({ selectedBrand, setSelected }) => {
     const [images, setImages] = useState<{ file: File | null, url: string }[]>([])
     const create = createBrandHook()
     const update = updateBrandHook()
-    // const uploadHook = uploadFilesHook()
+    const upload = uploadFileHook()
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -21,20 +21,19 @@ const BrandModal: React.FC<{ selectedBrand?: Brand, setSelected?: Dispatch<SetSt
         dispatch(setIsLoadingOverlay(true))
         const formData = new FormData(e.currentTarget)
         const brand: Brand = Object.fromEntries(formData.entries()) // Convert FormData to an object
-        // if (images[0].file != null) {
-        //     formData.set('file', images[0].file!)
-        //     await new Promise(resolve => {
-        //         uploadHook.mutate(formData, {
-        //             onSuccess(data) {
-        //                 brand["logo"] = data.url
-        //                 resolve(null)
-        //             }
-        //         })
-        //     })
-        // } else {
-        brand['logo'] = "https://www.hdwallpaperspulse.com/wp-content/uploads/2014/02/07/Toyota-Logo-Black-Background-copy.jpg"
-        // images[0].url
-        // }
+        if (images[0].file != null) {
+            formData.set('file', images[0].file!)
+            await new Promise(resolve => {
+                upload.mutate({ file: formData }, {
+                    onSuccess(data) {
+                        brand["logo"] = data.url
+                        resolve(null)
+                    }
+                })
+            })
+        } else {
+            brand['logo'] = images[0].url
+        }
         if (selectedBrand != null) {
             update.mutate({ brand, id: selectedBrand._id! })
             setSelected!(null)

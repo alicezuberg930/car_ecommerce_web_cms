@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { toast } from "react-toastify"
 import { API } from "../common/api"
-import { createBrand, createImage, deleteBrand, deleteImage, getImages, updateBrand, updateImage } from "../services/api.service"
+import { createImage, deleteImage, getImages, updateImage } from "../services/api.service"
 import { useRouter } from "next/navigation"
 import { PATH } from "../common/path"
 

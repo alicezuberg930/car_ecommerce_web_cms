@@ -45,7 +45,7 @@ export const updateBannerHook = () => {
         mutationFn: ({ id, banner }: { id: string, banner: Banner }) => updateBanner({ id, banner }),
         onSuccess(data) {
             toast.success("Sửa banner thành công")
-            queryClient.invalidateQueries({ queryKey: ["API.READ_BANNERS"] })
+            queryClient.invalidateQueries({ queryKey: [API.BANNERS] })
         },
         onError(error) {
             toast.error("Đã có lỗi xảy ra")

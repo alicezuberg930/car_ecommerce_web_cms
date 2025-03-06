@@ -5,11 +5,13 @@ import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useEffect, use
 import { useDispatch } from "react-redux"
 import CustomImagePicker from "./CustomImagePicker"
 import { createImageHook, updateImageHook } from "../hooks/image.hook"
+import { uploadFileHook } from "../hooks/common.hook"
 
 const ImageModal: React.FC<{ selectedImage?: Image, setSelected?: Dispatch<SetStateAction<New | null>> }> = ({ selectedImage, setSelected }) => {
     const create = createImageHook()
     const update = updateImageHook()
     const dispatch = useDispatch()
+    const upload = uploadFileHook()
     const [images, setImages] = useState<{ file: File | null, url: string }[]>([])
 
     useEffect(() => {
@@ -28,26 +30,26 @@ const ImageModal: React.FC<{ selectedImage?: Image, setSelected?: Dispatch<SetSt
         e.preventDefault()
         dispatch(setIsLoadingOverlay(true))
         const formData = new FormData(e.currentTarget)
-        // let tempImages = images.map(image => image.url)
-        // if (images.length > 0) {
-        //     const imageForm = new FormData()
-        //     for (let i = 0; i < images.length; i++) {
-        //         if (images[i].file != null) {
-        //             imageForm.set('file', images[i].file!)
-        //             await new Promise((resolve) => {
-        //                 uploadHook.mutate(imageForm, {
-        //                     onSuccess(data) {
-        //                         tempImages[i] = data.url
-        //                         resolve(null);
-        //                     }
-        //                 })
-        //             })
-        //         }
-        //     }
-        // }
-        // formData.delete('file')
+        let tempImages = images.map(image => image.url)
+        if (images.length > 0) {
+            const file = new FormData()
+            for (let i = 0; i < images.length; i++) {
+                if (images[i].file != null) {
+                    file.set('file', images[i].file!)
+                    await new Promise((resolve) => {
+                        upload.mutate({ file }, {
+                            onSuccess(data) {
+                                tempImages[i] = data.url
+                                resolve(null);
+                            }
+                        })
+                    })
+                }
+            }
+        }
+        formData.delete('file')
         const image: Image = Object.fromEntries(formData.entries())
-        image['url'] = ["https://static.wixstatic.com/media/b4dcef_85bd32cc5b8e4580ab3f2f236bedbab5~mv2.png/v1/fill/w_889,h_353,al_c/b4dcef_85bd32cc5b8e4580ab3f2f236bedbab5~mv2.png"]
+        image['url'] = tempImages
         if (selectedImage !== undefined) {
             update.mutate({ image, id: selectedImage._id! })
             setSelected!(null)

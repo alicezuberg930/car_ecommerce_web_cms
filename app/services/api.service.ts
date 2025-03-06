@@ -2,7 +2,7 @@ import { API } from "../common/api"
 import axioInstance, { instanceWithoutToken } from "../configs/axios.config"
 // file
 export const uploadFile = async ({ file }: { file: FormData }) => {
-    const response = await axioInstance({ url: 'https://future-be-act6.onrender.com/files/upload/image', method: "POST", data: file })
+    const response = await axioInstance({ url: API.FILE_UPLOAD, method: "POST", data: file })
     return response.data
 }
 

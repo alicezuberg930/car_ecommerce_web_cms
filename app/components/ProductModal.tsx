@@ -1,12 +1,12 @@
 'use client'
 import CustomImagePicker from '@/app/components/CustomImagePicker'
 import React, { FormEvent, useEffect, useState } from 'react'
-import { uploadFilesHook } from '../hooks/common.hooks'
 import { useDispatch } from 'react-redux'
 import { setIsLoadingOverlay } from '../services/common.slice'
 import { getBrandsHook } from '../hooks/brand.hook'
 import { createProductHook, updateProductHook } from '../hooks/product.hook'
 import { getCarTypesHook } from '../hooks/cartype.hook'
+import { uploadFileHook } from '../hooks/common.hook'
 
 const ProductModal: React.FC<{ selectedProduct?: Product, page: number }> = ({ selectedProduct, page }) => {
     // hooks
@@ -15,7 +15,7 @@ const ProductModal: React.FC<{ selectedProduct?: Product, page: number }> = ({ s
     const { data: cartypes, isLoading: loadingCarTypes } = getCarTypesHook(1)
     const update = updateProductHook(page)
     const create = createProductHook(page)
-    const upload = uploadFilesHook()
+    const upload = uploadFileHook()
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -35,26 +35,26 @@ const ProductModal: React.FC<{ selectedProduct?: Product, page: number }> = ({ s
         dispatch(setIsLoadingOverlay(true))
         const currentTarget = e.currentTarget
         const formData = new FormData(currentTarget)
-        // let tempImages = images.map(image => image.url)
-        // if (images.length > 0) {
-        //     const imageForm = new FormData()
-        //     for (let i = 0; i < images.length; i++) {
-        //         if (images[i].file != null) {
-        //             imageForm.set('file', images[i].file!)
-        //             await new Promise((resolve) => {
-        //                 uploadHook.mutate(imageForm, {
-        //                     onSuccess(data) {
-        //                         tempImages[i] = data.url
-        //                         resolve(null);
-        //                     }
-        //                 })
-        //             })
-        //         }
-        //     }
-        // }
-        // formData.delete('file')
+        let tempImages = images.map(image => image.url)
+        if (images.length > 0) {
+            const file = new FormData()
+            for (let i = 0; i < images.length; i++) {
+                if (images[i].file != null) {
+                    file.set('file', images[i].file!)
+                    await new Promise((resolve) => {
+                        upload.mutate({ file }, {
+                            onSuccess(data) {
+                                tempImages[i] = data.url
+                                resolve(null);
+                            }
+                        })
+                    })
+                }
+            }
+        }
+        formData.delete('file')
         const product: Product = Object.fromEntries(formData.entries())
-        product['images'] = ["https://static.wixstatic.com/media/b4dcef_85bd32cc5b8e4580ab3f2f236bedbab5~mv2.png/v1/fill/w_889,h_353,al_c/b4dcef_85bd32cc5b8e4580ab3f2f236bedbab5~mv2.png"]
+        product['images'] = tempImages
         if (selectedProduct !== undefined) {
             update.mutate({ product, id: selectedProduct!._id! })
         } else {

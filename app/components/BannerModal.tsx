@@ -1,5 +1,4 @@
 import React, { Dispatch, FormEvent, SetStateAction, useEffect, useState } from "react"
-import { uploadFilesHook } from "../hooks/common.hooks"
 import { toast } from "react-toastify"
 import CustomImagePicker from "./CustomImagePicker"
 import { useRouter } from "next/navigation"
@@ -7,12 +6,13 @@ import { PATH } from "../common/path"
 import { setIsLoadingOverlay } from "../services/common.slice"
 import { useDispatch } from "react-redux"
 import { createBannerHook, updateBannerHook } from "../hooks/banner.hook"
+import { uploadFileHook } from "../hooks/common.hook"
 
 const BannerModal: React.FC<{ selectedBanner?: Banner, setSelected?: Dispatch<SetStateAction<Banner | null>> }> = ({ selectedBanner, setSelected }) => {
     const [images, setImages] = useState<{ file: File | null, url: string }[]>([])
     const create = createBannerHook()
     const update = updateBannerHook()
-    const uploadHook = uploadFilesHook()
+    const upload = uploadFileHook()
     const router = useRouter()
     const dispatch = useDispatch()
 
@@ -32,21 +32,20 @@ const BannerModal: React.FC<{ selectedBanner?: Banner, setSelected?: Dispatch<Se
         const formData = new FormData(e.currentTarget)
         const banner: Banner = Object.fromEntries(formData.entries())
         let tempImages = images.map(image => image.url)
-        // if (images[0].file != null) {
-        //     for (let i = 0; i < images.length; i++) {
-        //         formData.set('file', images[0].file!)
-        //         await new Promise(resolve => {
-        //             uploadHook.mutate({ file: formData }, {
-        //                 onSuccess(data) {
-        //                     tempImages = data.url
-        //                     resolve(null)
-        //                 }
-        //             })
-        //         })
-        //     }
-        // }
-        banner["imageUrl"] = ["https://tse3.mm.bing.net/th?id=OIP.doZG3FI3PhAgphVd57FONgHaEK&pid=Api&P=0&h=180"]
-        // banner["imageUrl"] = tempImages
+        if (images[0].file != null) {
+            for (let i = 0; i < images.length; i++) {
+                formData.set('file', images[0].file!)
+                await new Promise(resolve => {
+                    upload.mutate({ file: formData }, {
+                        onSuccess(data) {
+                            tempImages = data.url
+                            resolve(null)
+                        }
+                    })
+                })
+            }
+        }
+        banner["imageUrl"] = tempImages
         if (selectedBanner != null) {
             update.mutate({ banner, id: selectedBanner._id! })
             setSelected!(null)
