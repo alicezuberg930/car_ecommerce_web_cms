@@ -19,5 +19,9 @@ export const API = {
     "NEWS": "/news/listnews",
     "CREATE_NEW": "/news/create",
     "UDPATE_NEW": (id: string) => `/news/upnews/${id}`,
-    "CREATE_CONTACT": "/contact/create"
+    "CREATE_CONTACT": "/contact/create",
+    "IMAGES": "/images/getlist",
+    "CREATE_IMAGE": "/images/create",
+    "DELETE_IMAGE": (id: string) => `/images/del/${id}`,
+    "UPDATE_IMAGE": (id: string) => `/images/update/${id}`
 }

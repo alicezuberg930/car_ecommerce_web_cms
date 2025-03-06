@@ -19,4 +19,6 @@ export const PATH = {
     NEW_SHIPPING_ADDRESS: "/cms/shipping/new",
     NEWS: "/cms/news",
     NEW_NEWS: "/cms/news/new",
+    IMAGES: "/cms/images",
+    NEW_IMAGE: "/cms/images/new"
 }

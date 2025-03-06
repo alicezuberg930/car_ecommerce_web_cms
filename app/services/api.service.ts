@@ -8,13 +8,13 @@ export const uploadFile = async ({ file }: { file: FormData }) => {
 
 // login
 export const login = async ({ phone, password }: { phone: any, password: any }) => {
-    const response = await instanceWithoutToken<any>({ url: `${API.LOGIN}`, method: "POST", data: { phone, password } })
+    const response = await instanceWithoutToken<any>({ url: API.LOGIN, method: "POST", data: { phone, password } })
     return response.data
 }
 
 // thương hiệu
 export const getBrands = async () => {
-    const response = await instanceWithoutToken<any>({ url: `${API.BRANDS}`, method: "GET" })
+    const response = await instanceWithoutToken<any>({ url: API.BRANDS, method: "GET" })
     return response.data
 }
 
@@ -35,7 +35,7 @@ export const deleteBrand = async ({ id }: { id: string }) => {
 
 // sản phẩm
 export const getProducts = async (filters: ProductFilter) => {
-    const response = await instanceWithoutToken<any>({ url: `${API.PRODUCTS}`, method: "POST", params: filters })
+    const response = await instanceWithoutToken<any>({ url: API.PRODUCTS, method: "POST", params: filters })
     return response.data
 }
 
@@ -61,7 +61,7 @@ export const updateProduct = async ({ product, id }: { product: Product, id: str
 
 // loại xe
 export const getCarTypes = async () => {
-    const response = await instanceWithoutToken<any>({ url: `${API.CARTYPES}`, method: "GET" })
+    const response = await instanceWithoutToken<any>({ url: API.CARTYPES, method: "GET" })
     return response.data
 }
 
@@ -123,6 +123,26 @@ export const createContact = async ({ contact }: { contact: Contact }) => {
 }
 
 
+// ảnh
+export const getImages = async () => {
+    const response = await instanceWithoutToken<any>({ url: API.IMAGES, method: "GET" })
+    return response.data
+}
+
+export const createImage = async ({ image }: { image: Image }) => {
+    const response = await axioInstance<any>({ url: API.CREATE_IMAGE, method: "POST", data: image })
+    return response.data
+}
+
+export const updateImage = async ({ image, id }: { image: Image, id: string }) => {
+    const response = await axioInstance<any>({ url: API.UPDATE_IMAGE(id), method: "PUT", data: image })
+    return response.data
+}
+
+export const deleteImage = async ({ id }: { id: string }) => {
+    const response = await axioInstance<any>({ url: API.DELETE_IMAGE(id), method: "DELETE" })
+    return response.data
+}
 // to be deleted
 // admin 
 export const lockAccount = async (lockReason: string) => {
