@@ -11,8 +11,8 @@ import { useState } from "react";
 const NewsPage: React.FC = () => {
     const { IoIosAddCircleOutline, MdModeEdit } = icons
     const [selectedNew, setSelectedNew] = useState<New | null>(null)
-    const [currentPage, setCurrentPage] = useState<number>(1)
-    const { data: news, isLoading } = getNewsHook({ page: currentPage })
+    const [page, setPage] = useState<number>(1)
+    const { data: news, isLoading } = getNewsHook({ page })
 
     return (
         <main className="h-full">
@@ -140,7 +140,7 @@ const NewsPage: React.FC = () => {
                             </table>
                         </div>
                         {isLoading ? <></> : news && news.pagination &&
-                            <CustomPaginator setCurrentPage={setCurrentPage} currentPage={currentPage} totalPage={Math.ceil(news?.pagination.total / news?.pagination.limit)} />
+                            <CustomPaginator setCurrentPage={setPage} currentPage={page} totalPage={Math.ceil(news?.pagination.total / news?.pagination.limit)} />
                         }
                     </div>
                 </div>

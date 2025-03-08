@@ -13,8 +13,8 @@ export const login = async ({ phone, password }: { phone: any, password: any }) 
 }
 
 // thương hiệu
-export const getBrands = async () => {
-    const response = await instanceWithoutToken<any>({ url: API.BRANDS, method: "GET" })
+export const getBrands = async ({ page, search }: { page: number, search: string }) => {
+    const response = await instanceWithoutToken<any>({ url: API.BRANDS, method: "GET", params: { page, search } })
     return response.data
 }
 
@@ -60,8 +60,8 @@ export const updateProduct = async ({ product, id }: { product: Product, id: str
 }
 
 // loại xe
-export const getCarTypes = async () => {
-    const response = await instanceWithoutToken<any>({ url: API.CARTYPES, method: "GET" })
+export const getCarTypes = async ({ page, search }: { page: number, search: string }) => {
+    const response = await instanceWithoutToken<any>({ url: API.CARTYPES, method: "GET", params: { page, search } })
     return response.data
 }
 

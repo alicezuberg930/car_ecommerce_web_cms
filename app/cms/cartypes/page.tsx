@@ -2,6 +2,7 @@
 import { icons } from '@/app/common/icons'
 import { PATH } from '@/app/common/path'
 import CarTypeModal from '@/app/components/CarTypeModal'
+import CustomPaginator from '@/app/components/CustomPaginator'
 import LoadingShimmer from '@/app/components/LoadingShimmer'
 import { deleteCarTypeHook, getCarTypesHook } from '@/app/hooks/cartype.hook'
 import Link from 'next/link'
@@ -10,8 +11,10 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 const CarTypePage: React.FC = () => {
+    const [page, setPage] = useState<number>(1)
+    const [search, setSearch] = useState<string>("")
     const { IoIosAddCircleOutline, MdModeEdit, FaRegTrashAlt } = icons
-    const { data: cartypes, isLoading } = getCarTypesHook(1)
+    const { data: cartypes, isLoading } = getCarTypesHook({ page, search })
     const remove = deleteCarTypeHook()
     const [selectedCarType, setSelectedCarType] = useState<CarType | null>(null)
 
@@ -45,7 +48,7 @@ const CarTypePage: React.FC = () => {
                         <div className='flex lg:flex-row flex-col justify-between gap-2'>
                             <div className='flex items-center gap-4 mb-4 md:mb-0'>
                                 <div className='shadow-sm border rounded-md'>
-                                    <input placeholder='Tìm kiếm' type='text' className='block focus:border-indigo-300 shadow-sm focus:shadow-blue-300 p-2 rounded-md sm:text-sm sm:leading-5 focus:outline-none' />
+                                    <input onChange={(e) => setSearch(e.currentTarget.value)} placeholder='Tìm kiếm' type='text' className='block focus:border-indigo-300 shadow-sm focus:shadow-blue-300 p-2 rounded-md sm:text-sm sm:leading-5 focus:outline-none' />
                                 </div>
                                 <div className='shadow-sm border rounded-md'>
                                     <select className='block border-gray-300 focus:border-indigo-300 focus:shadow-blue-300 py-2 pr-10 pl-3 border w-full text-base leading-6 focus:outline-none sm:text-sm'>
@@ -127,10 +130,8 @@ const CarTypePage: React.FC = () => {
                                 </tbody>
                             </table>
                         </div>
-                        {
-                            /* <div className='p-6 md:p-0'>
-                                {{ $products->links() }}
-                            </div> */
+                        {isLoading ? <></> : cartypes && cartypes.pagination &&
+                            <CustomPaginator setCurrentPage={setPage} currentPage={page} totalPage={cartypes.pagination.totalPages} />
                         }
                     </div>
                 </div>

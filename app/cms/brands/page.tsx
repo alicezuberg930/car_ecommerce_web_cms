@@ -2,6 +2,7 @@
 import { icons } from '@/app/common/icons'
 import { PATH } from '@/app/common/path'
 import BrandModal from '@/app/components/BrandModal'
+import CustomPaginator from '@/app/components/CustomPaginator'
 import LoadingShimmer from '@/app/components/LoadingShimmer'
 import { deleteBrandHook, getBrandsHook } from '@/app/hooks/brand.hook'
 import Link from 'next/link'
@@ -10,8 +11,10 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 const BrandsPage: React.FC = () => {
+    const [page, setPage] = useState<number>(1)
+    const [search, setSearch] = useState<string>("")
     const { IoIosAddCircleOutline, MdModeEdit, FaRegTrashAlt } = icons
-    const { data: brands, isLoading } = getBrandsHook(1)
+    const { data: brands, isLoading } = getBrandsHook({ page, search })
     const remove = deleteBrandHook()
     const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null)
 
@@ -45,7 +48,7 @@ const BrandsPage: React.FC = () => {
                         <div className='flex lg:flex-row flex-col justify-between gap-2'>
                             <div className='flex items-center gap-4 mb-4 md:mb-0'>
                                 <div className='shadow-sm border rounded-md'>
-                                    <input placeholder='Tìm kiếm' type='text' className='block focus:border-indigo-300 shadow-sm focus:shadow-blue-300 p-2 rounded-md sm:text-sm sm:leading-5 focus:outline-none' />
+                                    <input onChange={(e) => setSearch(e.target.value)} placeholder='Tìm kiếm' type='text' className='block focus:border-indigo-300 shadow-sm focus:shadow-blue-300 p-2 rounded-md sm:text-sm sm:leading-5 focus:outline-none' />
                                 </div>
                                 <div className='shadow-sm border rounded-md'>
                                     <select className='block border-gray-300 focus:border-indigo-300 focus:shadow-blue-300 py-2 pr-10 pl-3 border w-full text-base leading-6 focus:outline-none sm:text-sm'>
@@ -138,10 +141,8 @@ const BrandsPage: React.FC = () => {
                                 </tbody>
                             </table>
                         </div>
-                        {
-                            /* <div className='p-6 md:p-0'>
-                                {{ $products->links() }}
-                            </div> */
+                        {isLoading ? <></> : brands &&
+                            <CustomPaginator setCurrentPage={setPage} currentPage={page} totalPage={brands.totalPages} />
                         }
                     </div>
                 </div>

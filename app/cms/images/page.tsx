@@ -1,6 +1,7 @@
 "use client"
 import { icons } from "@/app/common/icons"
 import { PATH } from "@/app/common/path"
+import CustomPaginator from "@/app/components/CustomPaginator"
 import ImageModal from "@/app/components/ImageModal"
 import LoadingShimmer from "@/app/components/LoadingShimmer"
 import NewsModal from "@/app/components/NewsModal"
@@ -13,6 +14,7 @@ import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 
 const ImagesPage: React.FC = () => {
+    const [page, setPage] = useState<number>(1)
     const { IoIosAddCircleOutline, MdModeEdit } = icons
     const { data: images, isLoading } = getImagesHook(1)
     const [selectedImage, setSelectedImage] = useState<Image | null>(null)
@@ -113,10 +115,8 @@ const ImagesPage: React.FC = () => {
                                 </tbody>
                             </table>
                         </div>
-                        {
-                            /* <div className="p-6 md:p-0">
-                                {{ $products->links() }}
-                            </div> */
+                        {isLoading ? <></> : images && images.pagination &&
+                            <CustomPaginator setCurrentPage={setPage} currentPage={page} totalPage={images.pagination.totalPages} />
                         }
                     </div>
                 </div>
