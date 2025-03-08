@@ -147,7 +147,7 @@ const NewsPage: React.FC = () => {
             </div>
             <div className={`w-full h-screen fixed inset-0 z-20 overflow-y-scroll ${selectedNew != null ? 'block' : 'hidden'}`}>
                 <div className='flex items-end justify-center min-h-screen px-4 py-6 text-center sm:block sm:p-0'>
-                    <div className='fixed inset-0 transition-opacity'>
+                    <div className='fixed inset-0 transition-opacity' onClick={() => setSelectedNew(null)}>
                         <div className='absolute inset-0 bg-gray-500 opacity-75'></div>
                     </div>
                     <div className='z-30 relative inline-block bg-white shadow-xl my-8 sm:align-middle max-w-5xl rounded-md w-full'>
