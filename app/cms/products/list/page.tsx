@@ -10,6 +10,7 @@ import Image from 'next/image'
 import { PATH } from '@/app/common/path'
 import { formatVND } from '@/app/common/utils'
 import { deleteProductHook, getProductsHook } from '@/app/hooks/product.hook'
+import CustomPaginator from '@/app/components/CustomPaginator'
 
 const ProductListPage: React.FC = () => {
     // icons
@@ -18,7 +19,7 @@ const ProductListPage: React.FC = () => {
     const [checkBoxes, setCheckBoxes] = useState<number[]>([])
     const [checkAll, setCheckAll] = useState<boolean>(false)
     const [currentPage, setCurrentPage] = useState<number>(1)
-    const { data: products, isLoading } = getProductsHook(currentPage)
+    const { data: products, isLoading } = getProductsHook({ filter: { page: currentPage } })
     const remove = deleteProductHook(currentPage)
 
     // const dummy: number[] = []
@@ -221,9 +222,9 @@ const ProductListPage: React.FC = () => {
                                 </tbody>
                             </table>
                         </div>
-                        {/* {isLoading ? <></> : products && products.data &&
-                            < CustomPaginator setCurrentPage={setCurrentPage} currentPage={currentPage} totalPage={products?.data.pagination.totalPages} />
-                        } */}
+                        {isLoading ? <></> : products && products.pagination &&
+                            <CustomPaginator setCurrentPage={setCurrentPage} currentPage={currentPage} totalPage={products?.pagination.totalPages} />
+                        }
                     </div>
                 </div>
             </div>

@@ -34,8 +34,8 @@ export const deleteBrand = async ({ id }: { id: string }) => {
 }
 
 // sản phẩm
-export const getProducts = async (filters: ProductFilter) => {
-    const response = await instanceWithoutToken<any>({ url: API.PRODUCTS, method: "POST", params: filters })
+export const getProducts = async ({ filter }: { filter?: ProductFilter }) => {
+    const response = await instanceWithoutToken<any>({ url: API.PRODUCTS, method: "POST", params: filter })
     return response.data
 }
 
@@ -97,8 +97,8 @@ export const getBanners = async () => {
 }
 
 // tin tức
-export const getNews = async () => {
-    const response = await axioInstance<any>({ url: API.NEWS, method: "GET" })
+export const getNews = async ({ page }: { page: number }) => {
+    const response = await axioInstance<any>({ url: API.NEWS, method: "GET", params: { page } })
     return response.data
 }
 

@@ -1,6 +1,7 @@
 "use client"
 import { icons } from "@/app/common/icons";
 import { PATH } from "@/app/common/path";
+import CustomPaginator from "@/app/components/CustomPaginator";
 import LoadingShimmer from "@/app/components/LoadingShimmer";
 import NewsModal from "@/app/components/NewsModal";
 import { getNewsHook } from "@/app/hooks/new.hook";
@@ -9,8 +10,9 @@ import { useState } from "react";
 
 const NewsPage: React.FC = () => {
     const { IoIosAddCircleOutline, MdModeEdit } = icons
-    const { data: news, isLoading } = getNewsHook(1)
     const [selectedNew, setSelectedNew] = useState<New | null>(null)
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const { data: news, isLoading } = getNewsHook({ page: currentPage })
 
     return (
         <main className="h-full">
@@ -137,10 +139,8 @@ const NewsPage: React.FC = () => {
                                 </tbody>
                             </table>
                         </div>
-                        {
-                            /* <div className="p-6 md:p-0">
-                                {{ $products->links() }}
-                            </div> */
+                        {isLoading ? <></> : news && news.pagination &&
+                            <CustomPaginator setCurrentPage={setCurrentPage} currentPage={currentPage} totalPage={Math.ceil(news?.pagination.total / news?.pagination.limit)} />
                         }
                     </div>
                 </div>

@@ -6,5 +6,6 @@ interface ProductFilter {
     transmission?: string
     numberseats?: number
     minPrice?: number
-    maxPrice?: number
+    maxPrice?: number,
+    page?: number
 }

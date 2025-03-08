@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation"
 import { PATH } from "../common/path"
 import { createNews, getNews, updateNews } from "../services/api.service"
 
-export const getNewsHook = (page: number) => {
+export const getNewsHook = ({ page }: { page: number }) => {
     return useQuery({
         queryKey: [API.NEWS, page],
-        queryFn: () => getNews(),
+        queryFn: () => getNews({ page }),
         placeholderData: (previousData, _) => previousData,
     })
 }

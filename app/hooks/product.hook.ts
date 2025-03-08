@@ -5,10 +5,10 @@ import { PATH } from "../common/path"
 import { API } from "../common/api"
 import { createProduct, deleteProduct, getProducts, updateProduct } from "../services/api.service"
 
-export const getProductsHook = (page: number) => {
+export const getProductsHook = ({ filter }: { filter: ProductFilter }) => {
     return useQuery({
-        queryKey: [API.PRODUCTS, page],
-        queryFn: () => getProducts({}),
+        queryKey: [API.PRODUCTS, filter],
+        queryFn: () => getProducts({ filter }),
         placeholderData: (previousData, _) => previousData,
     })
 }
