@@ -5,7 +5,7 @@ import { createBrand, deleteBrand, getBrands, updateBrand } from "../services/ap
 import { useRouter } from "next/navigation"
 import { PATH } from "../common/path"
 
-export const getBrandsHook = ({ page, search }: { page: number, search: string }) => {
+export const getBrandsHook = ({ page, search }: { page?: number, search?: string }) => {
     return useQuery({
         queryKey: [API.BRANDS, { page, search }],
         queryFn: () => getBrands({ page, search }),

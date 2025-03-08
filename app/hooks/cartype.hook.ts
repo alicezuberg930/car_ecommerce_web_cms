@@ -5,7 +5,7 @@ import { createCarType, deleteCarType, getCarTypes } from "../services/api.servi
 import { useRouter } from "next/navigation"
 import { PATH } from "../common/path"
 
-export const getCarTypesHook = ({ page, search }: { page: number, search: string }) => {
+export const getCarTypesHook = ({ page, search }: { page?: number, search?: string }) => {
     return useQuery({
         queryKey: [API.CARTYPES, { page, search }],
         queryFn: () => getCarTypes({ page, search }),

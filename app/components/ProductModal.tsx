@@ -11,8 +11,8 @@ import { uploadFileHook } from '../hooks/common.hook'
 const ProductModal: React.FC<{ selectedProduct?: Product, page: number }> = ({ selectedProduct, page }) => {
     // hooks
     const [images, setImages] = useState<{ file: File | null, url: string }[]>([])
-    const { data: brands, isLoading: loadingBrands } = getBrandsHook(1)
-    const { data: cartypes, isLoading: loadingCarTypes } = getCarTypesHook(1)
+    const { data: brands, isLoading: loadingBrands } = getBrandsHook({ page: 1 })
+    const { data: cartypes, isLoading: loadingCarTypes } = getCarTypesHook({ page: 1 })
     const update = updateProductHook(page)
     const create = createProductHook(page)
     const upload = uploadFileHook()
