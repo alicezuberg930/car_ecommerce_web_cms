@@ -77,7 +77,10 @@ const ImageModal: React.FC<{ selectedImage?: Image, setSelected?: Dispatch<SetSt
                                 <tr>
                                     <td className='py-3 w-32'>Trạng thái<b className='text-red-500'>*</b></td>
                                     <td className='py-3'>
-                                        <input className='border-gray-300 p-2 border focus:border-blue-500 rounded-md w-full outline-none' type='text' required name="status" defaultValue={selectedImage?.status ?? ""} />
+                                        <select defaultValue={selectedImage?.status ?? "bought"} className='border-gray-300 p-2 border focus:border-blue-500 rounded-md w-full outline-none' name='status'>
+                                            <option value="bought">Đã mua</option>
+                                            <option value="sold">Đã bán</option>
+                                        </select>
                                     </td>
                                 </tr>
 

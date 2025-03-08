@@ -49,7 +49,7 @@ export const updateImageHook = () => {
         mutationFn: ({ id, image }: { id: string, image: Image }) => updateImage({ image, id }),
         onSuccess(data) {
             toast.success("Sửa hình ảnh thành công")
-            queryClient.invalidateQueries({ queryKey: [API.IMAGES] })
+            queryClient.invalidateQueries({ queryKey: [API.IMAGES, 1] })
         },
         onError(error) {
             toast.error("Đã có lỗi xảy ra")
