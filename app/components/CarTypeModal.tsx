@@ -1,6 +1,5 @@
 'use client'
 import React, { Dispatch, FormEvent, SetStateAction } from "react"
-import { uploadFilesHook } from "../hooks/common.hook"
 import { setIsLoadingOverlay } from "../services/common.slice"
 import { useDispatch } from "react-redux"
 import { createCarTypeHook } from "../hooks/cartype.hook"
