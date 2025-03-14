@@ -3,6 +3,7 @@ export const API = {
     "CARTYPES": "/cartype/list",
     "CREATE_CARTYPE": "/cartype/create",
     "DELETE_CARTYPE": (id: string) => `/cartype/del/${id}`,
+    "UPDATE_CARTYPE": (id: string) => `/cartype/update/${id}`,
     "BRANDS": "/brand/list",
     "CREATE_BRAND": "/brand/create",
     "UPDATE_BRAND": (id: string) => `/brand/update/${id}`,

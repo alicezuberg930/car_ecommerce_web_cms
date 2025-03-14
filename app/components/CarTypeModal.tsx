@@ -2,11 +2,11 @@
 import React, { Dispatch, FormEvent, SetStateAction } from "react"
 import { setIsLoadingOverlay } from "../services/common.slice"
 import { useDispatch } from "react-redux"
-import { createCarTypeHook } from "../hooks/cartype.hook"
+import { createCarTypeHook, updateCarTypeHook } from "../hooks/cartype.hook"
 
 const CarTypeModal: React.FC<{ selectedCarType?: CarType, setSelected?: Dispatch<SetStateAction<CarType | null>> }> = ({ selectedCarType, setSelected }) => {
     const create = createCarTypeHook()
-    // const update = updateBrandHook()
+    const update = updateCarTypeHook()
     // const uploadHook = uploadFilesHook()
     const dispatch = useDispatch()
 
@@ -16,8 +16,8 @@ const CarTypeModal: React.FC<{ selectedCarType?: CarType, setSelected?: Dispatch
         const formData = new FormData(e.currentTarget)
         const cartype: CarType = Object.fromEntries(formData.entries()) // Convert FormData to an object
         if (selectedCarType != null) {
-            // update.mutate({ cartype, id: selectedCarType._id! })
-            // setSelected!(null)
+            update.mutate({ cartype, id: selectedCarType._id! })
+            setSelected!(null)
         } else {
             create.mutate({ cartype })
         }

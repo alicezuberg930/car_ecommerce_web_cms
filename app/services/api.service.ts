@@ -70,6 +70,11 @@ export const createCarType = async ({ cartype }: { cartype: CarType }) => {
     return response.data
 }
 
+export const updateCarType = async ({ cartype, id }: { cartype: CarType, id: string }) => {
+    const response = await axioInstance<any>({ url: API.UPDATE_CARTYPE(id), method: "PUT", data: cartype })
+    return response.data
+}
+
 export const deleteCarType = async ({ id }: { id: string }) => {
     const response = await axioInstance<any>({ url: API.DELETE_CARTYPE(id), method: "DELETE", })
     return response.data
